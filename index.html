@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Password Generator</title>
+    <link rel="stylesheet" href="project5.css">
+</head>
+<body>
+    <div id="container">
+        <h1>Generate a <br><span> Random Password </span></h1> 
+        <div id="lowerbox">
+            <input type="text" class="password" placeholder="Password">
+            <img src="copy.png" onclick="copypassword()">
+        </div>
+        <button onclick="generate()" class="generate">Generate</button>
+    </div>
+    <div id="container2">
+        <h1>Check Incase Your Password Is Weak</h1>
+        <input type="text" id="inputpass" placeholder="Input password">
+        <!-- <button class="generate">></button> -->
+        <h5 id="yourpass">Password Strength Is<span id="kind"></span></h5>
+    </div>
+    <script>
+        const passwordbox = document.getElementsByClassName("password")[0];
+        const length = 11;
+        const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const lowercase = "abcdefghijklmnopqrstuvwxyz";
+        const number = "0123456789";
+        const special = "@#$";
+        const allchars = uppercase + lowercase + special + number;
+        function generate(){
+            let password = "";
+            // password += uppercase[Math.floor(Math.random() * uppercase.length)];//ye jo function hai [Math.floor(Math.random() * random cheeza laleta
+            // password += lowercase[Math.floor(Math.random() * lowercase.length)];
+            // password += special[Math.floor(Math.random() * special.length)];
+            // password += number[Math.floor(Math.random() * number.length)];
+
+            while(length > password.length){
+                password += allchars[Math.floor(Math.random() * allchars.length)];//ye jo function hai ([Math.floor(Math.random() * varname) random cheeza laleta
+            }
+            passwordbox.value = password;
+        }
+        function copypassword(){
+            passwordbox.select();// ye mehod sirf select karta apan keyboard se kaisa karte shift daba k phir arrow se waisich
+            document.execCommand("copy");
+            // alert(passwordbox.value);
+        }
+        const pass = document.getElementById("inputpass");
+        const msg = document.getElementById("yourpass");
+        const kind = document.getElementById("kind");
+        pass.addEventListener("input", function(){
+            if(pass.value.length >0){
+                // yourpass.style.color = "#fff";
+                msg.style.display = "block";
+            }
+            if(pass.value.length<3){
+                color("weak","red","red");
+            }
+            else if(pass.value.length>3 && pass.value.length<7){
+                color("medium","yellow","yellow");
+
+            }
+            else if(pass.value.length>7 ){
+                color("strong","green","green");
+            }
+        })
+        function color(a,b,c){
+            kind.innerHTML = a;
+            kind.style.color = b;
+            msg.style.color = c;
+        }
+    </script>
+</body>
+</html>
